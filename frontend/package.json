@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "elliptic": "^6.6.1",
+    "js-sha3": "^0.9.3",
+    "tdesign-miniprogram": "^1.14.0"
+  },
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

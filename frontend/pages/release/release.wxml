@@ -1,0 +1,65 @@
+<!--pages/release/release.wxml-->
+<view class="page">
+
+  <!-- 顶部 -->
+  <view class="header-card">
+    <view class="badge">DID OPERATIONS</view>
+    <view class="title">操作中心</view>
+    <view class="subtitle">
+      你可以在这里围绕当前 DID 执行状态查询、文档更新、身份认证、数据恢复和属性证明。
+    </view>
+  </view>
+
+  <!-- 当前 DID -->
+  <view class="identity-card">
+    <view class="section-title">当前操作身份</view>
+    <view class="section-desc">所有操作默认使用当前绑定的 DID</view>
+
+    <view class="did-box">
+      <view class="did-label">DID</view>
+      <view class="did-value">{{currentDid || '-'}}</view>
+    </view>
+  </view>
+
+  <!-- 操作列表 -->
+  <view class="action-card">
+    <view class="section-title">功能操作</view>
+    <view class="section-desc">请选择需要执行的 DID 业务功能</view>
+
+    <view class="action-grid">
+      <view
+        wx:for="{{quickActions}}"
+        wx:key="key"
+        class="action-item {{item.wide ? 'wide' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="handleQuickAction"
+      >
+        <view class="action-icon {{item.colorClass}}">
+          <t-icon
+            name="{{item.icon}}"
+            size="34rpx"
+            color="currentColor"
+          />
+        </view>
+
+        <view class="action-main">
+          <view class="action-title">{{item.title}}</view>
+          <view class="action-desc">{{item.desc}}</view>
+        </view>
+
+        <view class="arrow">
+          <t-icon name="chevron-right" size="32rpx" color="#5F6775" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="tip-card">
+    <view class="tip-title">说明</view>
+    <view class="tip-desc">
+      本页面只负责发起操作，具体校验逻辑由 Flask 后端、MongoDB 与链上智能合约共同完成。
+    </view>
+  </view>
+
+</view>

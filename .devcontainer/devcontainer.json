@@ -1,0 +1,28 @@
+{
+  "name": "did-project-backend",
+  "dockerComposeFile": [
+    "../deploy/compose.yaml"
+  ],
+  "service": "backend",
+  "workspaceFolder": "/app",
+  "shutdownAction": "none",
+  "overrideCommand": false,
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.analysis.extraPaths": [
+          "/app"
+        ],
+        "python.terminal.activateEnvironment": false,
+        "terminal.integrated.defaultProfile.linux": "sh"
+      }
+    }
+  }
+}

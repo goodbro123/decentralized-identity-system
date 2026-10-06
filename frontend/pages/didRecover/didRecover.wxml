@@ -1,0 +1,364 @@
+<view class="page">
+
+  <!-- 顶部说明 -->
+  <view class="header-card">
+    <view class="header-top">
+      <view>
+        <view class="badge">DID RECOVER</view>
+        <view class="title">数据恢复</view>
+      </view>
+
+      <view class="status-pill {{backendOk ? 'online' : 'offline'}}">
+        {{backendOk ? '后端在线' : '后端离线'}}
+      </view>
+    </view>
+
+    <view class="subtitle">
+      当链下 DID 文档丢失、损坏或被篡改时，可通过恢复块重建文档，并在恢复后自动执行状态查询和身份认证。
+    </view>
+  </view>
+
+  <!-- 恢复参数 -->
+  <view class="section-card">
+    <view class="section-title">恢复参数</view>
+    <view class="section-desc">默认恢复当前 DID 的最新版本，也可以指定历史版本进行恢复。</view>
+
+    <view class="field">
+      <view class="label">DID 标识</view>
+      <input
+        class="input"
+        placeholder="例如：did:ethr:alice"
+        placeholder-class="placeholder"
+        value="{{did}}"
+        data-field="did"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="field">
+      <view class="label">版本号，可选</view>
+      <input
+        class="input"
+        type="number"
+        placeholder="不填写则恢复最新版本"
+        placeholder-class="placeholder"
+        value="{{version}}"
+        data-field="version"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="field">
+      <view class="label">模拟丢失的数据块索引，可选</view>
+      <input
+        class="input"
+        placeholder="例如：0,2,3"
+        placeholder-class="placeholder"
+        value="{{missingIndexesText}}"
+        data-field="missingIndexesText"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="button-row">
+      <button class="secondary-btn" bindtap="useCurrentDid">
+        当前 DID
+      </button>
+
+      <button class="primary-btn" loading="{{recovering}}" bindtap="startRecover">
+        {{recovering ? '恢复中' : '发起恢复'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 恢复方式 -->
+  <view class="section-card">
+    <view class="section-title">恢复方式</view>
+    <view class="section-desc">自动恢复由后端自动选择恢复策略。</view>
+
+    <view class="method-list">
+      <view
+        wx:for="{{methodOptions}}"
+        wx:key="key"
+        class="method-item {{recoverMethod === item.key ? 'active' : ''}}"
+        data-method="{{item.key}}"
+        bindtap="selectRecoverMethod"
+      >
+        <view class="method-icon {{recoverMethod === item.key ? 'active' : ''}}">
+          <t-icon
+            name="{{recoverMethod === item.key ? 'check' : 'minus'}}"
+            size="30rpx"
+            color="currentColor"
+          />
+        </view>
+
+        <view class="method-main">
+          <view class="method-title">{{item.title}}</view>
+          <view class="method-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 未恢复提示 -->
+  <view class="empty-card" wx:if="{{!recovered && !loading}}">
+    <t-icon name="refresh" size="48rpx" color="#8E98A8" />
+    <view class="empty-title">等待恢复</view>
+    <view class="empty-desc">
+      点击“发起恢复”后，系统会从恢复块中重建 DID 文档，并自动验证恢复结果。
+    </view>
+  </view>
+
+  <!-- 总体恢复结果 -->
+  <view class="result-card {{summaryClass}}" wx:if="{{recovered}}">
+    <view class="result-icon {{summaryClass}}">
+      <t-icon
+        name="{{isValid ? 'check-circle' : 'close-circle'}}"
+        size="52rpx"
+        color="currentColor"
+      />
+    </view>
+
+    <view class="result-main">
+      <view class="result-title">{{summaryText}}</view>
+      <view class="result-desc">{{summaryDesc}}</view>
+      <view class="result-time">恢复时间：{{recoverTimeText}}</view>
+    </view>
+  </view>
+
+  <!-- 恢复概要 -->
+  <view class="section-card" wx:if="{{recovered && recoverResult}}">
+    <view class="section-title">恢复概要</view>
+    <view class="section-desc">后端返回的恢复版本、恢复策略和最终状态。</view>
+
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-label">恢复版本</view>
+        <view class="status-value">
+          {{recoverResult.version || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">恢复方法</view>
+        <view class="status-value small">
+          {{recoverResult.recovery_method || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">恢复 DID</view>
+        <view class="status-value small">
+          {{recoverResult.did || did || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">可信状态</view>
+        <view class="status-value {{isValid ? 'success' : 'danger'}}">
+          {{isValid ? '可信' : '不可信'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 恢复校验结果 -->
+  <view class="section-card" wx:if="{{recovered}}">
+    <view class="section-title">恢复校验结果</view>
+    <view class="section-desc">恢复成功不等于可信，必须通过本地完整性与链上状态一致性校验。</view>
+
+    <view class="check-list">
+      <view
+        wx:for="{{checkItems}}"
+        wx:key="key"
+        class="check-item"
+      >
+        <view class="check-icon {{item.statusClass}}">
+          <t-icon
+            name="{{item.status === true ? 'check' : item.status === false ? 'close' : 'minus'}}"
+            size="30rpx"
+            color="currentColor"
+          />
+        </view>
+
+        <view class="check-main">
+          <view class="check-title">{{item.title}}</view>
+          <view class="check-desc">{{item.desc}}</view>
+        </view>
+
+        <view class="check-status {{item.statusClass}}">
+          {{item.statusText}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 恢复后摘要字段 -->
+  <view class="section-card" wx:if="{{recovered && recoverResult}}">
+    <view class="section-title">恢复后摘要字段</view>
+    <view class="section-desc">这些字段由恢复后的 DID 文档重新计算得到，可点击复制。</view>
+
+    <view class="hash-row" data-value="{{recoverResult.document_hash}}" bindtap="copyHash">
+      <view class="hash-main">
+        <view class="hash-label">document_hash</view>
+        <view class="hash-value">{{recoverResult.document_hash || '-'}}</view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+
+    <view class="hash-row" data-value="{{recoverResult.merkle_root}}" bindtap="copyHash">
+      <view class="hash-main">
+        <view class="hash-label">merkle_root</view>
+        <view class="hash-value">{{recoverResult.merkle_root || '-'}}</view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+
+    <view class="hash-row" data-value="{{recoverResult.version_hash}}" bindtap="copyHash">
+      <view class="hash-main">
+        <view class="hash-label">version_hash</view>
+        <view class="hash-value">{{recoverResult.version_hash || '-'}}</view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+  </view>
+
+  <!-- 恢复后状态查询 -->
+  <view class="section-card" wx:if="{{latestResult}}">
+    <view class="section-title">恢复后状态查询</view>
+    <view class="section-desc">恢复完成后自动调用 /api/did/latest 的结果。</view>
+
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-label">链上版本</view>
+        <view class="status-value">
+          {{chainState.version || currentDocument.version || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">文档状态</view>
+        <view class="status-value success">
+          {{currentDocument.status || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">链上存在</view>
+        <view class="status-value {{chainState.exists === false ? 'danger' : 'success'}}">
+          {{chainState.exists === false ? '否' : '是'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">当前 DID</view>
+        <view class="status-value small">
+          {{latestResult.did || did || '-'}}
+        </view>
+      </view>
+    </view>
+
+    <view class="hash-row">
+      <view class="hash-main">
+        <view class="hash-label">current document_hash</view>
+        <view class="hash-value">
+          {{currentDocument.document_hash || currentDocument.doc_hash || '-'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 恢复后身份认证 -->
+  <view class="section-card" wx:if="{{verifyResult}}">
+    <view class="section-title">恢复后身份认证</view>
+    <view class="section-desc">恢复完成后自动调用 /api/did/verify 的结果。</view>
+
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-label">认证状态</view>
+        <view class="status-value {{verifyResult.is_valid ? 'success' : 'danger'}}">
+          {{verifyResult.is_valid ? '通过' : '未通过'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">交易校验</view>
+        <view class="status-value {{verifyResult.transaction_verified ? 'success' : 'danger'}}">
+          {{verifyResult.transaction_verified ? '通过' : '失败'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">历史连续性</view>
+        <view class="status-value {{verifyResult.history_chain_valid ? 'success' : 'danger'}}">
+          {{verifyResult.history_chain_valid ? '通过' : '失败'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">链上匹配</view>
+        <view class="status-value {{verifyResult.latest_chain_match ? 'success' : 'danger'}}">
+          {{verifyResult.latest_chain_match ? '通过' : '失败'}}
+        </view>
+      </view>
+    </view>
+
+    <view class="button-row">
+      <button class="secondary-btn" bindtap="copyVerifyJson">
+        复制认证结果
+      </button>
+
+      <button class="primary-btn" bindtap="goVerify">
+        查看认证页
+      </button>
+    </view>
+  </view>
+
+  <!-- 恢复结果 JSON -->
+  <view class="section-card" wx:if="{{recovered}}">
+    <view class="section-head">
+      <view>
+        <view class="section-title">恢复结果 JSON</view>
+        <view class="section-desc">后端返回的完整恢复结果，可用于调试和答辩展示。</view>
+      </view>
+
+      <view class="copy-btn" bindtap="copyRecoverJson">
+        复制
+      </view>
+    </view>
+
+    <view class="json-box">
+      <text>{{recoverResultJson || '暂无恢复结果'}}</text>
+    </view>
+  </view>
+
+  <!-- 认证结果 JSON -->
+  <view class="section-card" wx:if="{{verifyResult}}">
+    <view class="section-head">
+      <view>
+        <view class="section-title">恢复后认证 JSON</view>
+        <view class="section-desc">恢复完成后自动认证的完整返回结果。</view>
+      </view>
+
+      <view class="copy-btn" bindtap="copyVerifyJson">
+        复制
+      </view>
+    </view>
+
+    <view class="json-box">
+      <text>{{verifyResultJson || '暂无认证结果'}}</text>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-card">
+    <view class="bottom-text">
+      <view class="bottom-title">恢复说明</view>
+      <view class="bottom-desc">
+        数据恢复会重建链下 DID 文档，但不发起新的链上交易。恢复后系统会自动查询状态并执行身份认证。
+      </view>
+    </view>
+
+  </view>
+
+</view>

@@ -1,0 +1,194 @@
+<view class="page">
+
+<view class="hero">
+  <view class="badge">DID AUTH</view>
+  <view class="title">去中心化身份认证</view>
+  <view class="subtitle">
+    使用 DID 控制私钥完成身份创建与导入，链上锚定状态，链下文档可验证、可恢复。
+  </view>
+</view>
+
+<view class="panel">
+
+  <!-- tab -->
+  <view class="tabs">
+    <view
+      class="tab-item {{current === 1 ? 'active' : ''}}"
+      data-code="1"
+      bindtap="click"
+    >
+      导入已有 DID
+    </view>
+
+    <view
+      class="tab-item {{current === 0 ? 'active' : ''}}"
+      data-code="0"
+      bindtap="click"
+    >
+      创建新 DID
+    </view>
+  </view>
+
+  <!-- 导入已有 DID -->
+  <view wx:if="{{current === 1}}" class="form">
+
+    <view class="form-title">导入已有 DID</view>
+    <view class="form-desc">
+      需要输入 DID 与对应控制私钥。系统会通过 challenge 签名验证你是否拥有该 DID 的控制权。
+    </view>
+
+    <view class="form-item">
+      <view class="label">DID 标识</view>
+      <input
+        class="input"
+        placeholder="例如：did:ethr:0x..."
+        placeholder-class="placeholder"
+        value="{{bindDid}}"
+        data-field="bindDid"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">DID 控制私钥</view>
+      <input
+        class="input"
+        password
+        placeholder="请输入该 DID 对应的私钥"
+        placeholder-class="placeholder"
+        value="{{importPrivateKey}}"
+        data-field="importPrivateKey"
+        bindinput="onInput"
+      />
+    </view>
+
+  </view>
+
+  <!-- 创建新 DID -->
+  <view wx:if="{{current === 0}}" class="form">
+
+    <view class="form-title">创建新 DID</view>
+    <view class="form-desc">
+      用户只填写身份资料，DID、控制地址、验证方法和私钥由小程序自动生成。
+    </view>
+
+    <view class="form-item">
+      <view class="label">DID 标识</view>
+      <input
+        class="input readonly"
+        disabled
+        placeholder="注册时自动生成"
+        placeholder-class="placeholder"
+        value="{{registerDid}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">控制地址</view>
+      <input
+        class="input readonly"
+        disabled
+        placeholder="注册时自动生成"
+        placeholder-class="placeholder"
+        value="{{publicKey}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">姓名</view>
+      <input
+        class="input"
+        placeholder="请输入姓名"
+        placeholder-class="placeholder"
+        value="{{name}}"
+        data-field="name"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">组织</view>
+      <input
+        class="input"
+        placeholder="例如：Nanjing Institute of Technology"
+        placeholder-class="placeholder"
+        value="{{organization}}"
+        data-field="organization"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">邮箱</view>
+      <input
+        class="input"
+        placeholder="请输入邮箱"
+        placeholder-class="placeholder"
+        value="{{email}}"
+        data-field="email"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">角色</view>
+      <input
+        class="input"
+        placeholder="例如：student"
+        placeholder-class="placeholder"
+        value="{{role}}"
+        data-field="role"
+        bindinput="onInput"
+      />
+    </view>
+
+  </view>
+
+  <!-- 验证码 -->
+  <view class="form-item">
+    <view class="label">图形验证码</view>
+
+    <view class="captcha-row">
+      <input
+        class="input captcha-input"
+        placeholder="请输入验证码"
+        placeholder-class="placeholder"
+        value="{{imgCode}}"
+        data-field="imgCode"
+        bindinput="onInput"
+      />
+
+      <canvas
+        type="2d"
+        id="captchaCanvas"
+        class="captcha-canvas"
+        bindtap="changeImg"
+      ></canvas>
+    </view>
+
+    <view class="captcha-tip">点击验证码可刷新</view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <button
+    class="submit-btn"
+    loading="{{loading}}"
+    bindtap="submit"
+  >
+    {{loading ? '处理中...' : current === 1 ? '导入 DID' : '创建 DID'}}
+  </button>
+
+  <view class="demo-btn" bindtap="fillDemoDid">
+    填充演示数据
+  </view>
+
+</view>
+
+<view class="tips-card">
+  <view class="tips-title">安全提示</view>
+  <view class="tips-desc">
+    DID 控制权由私钥证明。私钥不会上传后端，请妥善备份。私钥丢失后，将无法更新或恢复该 DID。
+  </view>
+</view>
+
+</view>

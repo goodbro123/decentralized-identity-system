@@ -1,0 +1,8 @@
+<!--components/pub-title/pub-title.wxml-->
+<view class="about" >
+  <view class="pubTitle">
+    <view class="en">{{enname}}</view>
+    <view class="cn">{{cnname}}</view>
+    <view class="line"></view>
+  </view>
+</view>

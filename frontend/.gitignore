@@ -1,0 +1,20 @@
+# Windows
+[Dd]esktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Node.js dependencies
+node_modules/
+
+# WeChat Mini Program generated npm packages
+miniprogram_npm/
+
+# WeChat Developer Tools local/private config
+project.private.config.json

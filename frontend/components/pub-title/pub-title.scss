@@ -1,0 +1,31 @@
+//自定义标题
+.about{
+  padding: 50rpx 30rpx 80rpx;
+}
+
+.pubTitle{
+  text-align: center;
+  .en{
+    font-size: 86rpx;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--themeColor);
+    opacity: 0.1;
+  }
+
+  .cn{
+    font-size: 56rpx;
+    font-weight: 900;
+    transform: translateY(-60rpx);
+    color: var(--themeColor);
+  }
+
+  .line{
+    width: 300rpx;
+    height: 5rpx;
+    background: var(--themeColor);
+    opacity: 0.4;
+    display: inline-block;
+    transform: translateY(-40rpx);
+  }
+}

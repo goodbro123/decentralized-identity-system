@@ -1,0 +1,15 @@
+{
+  "contractName": "DIDState",
+  "contractSourcePath": "/contracts/DIDState.sol",
+  "solidityVersion": "0.8.20",
+  "provider": "http://ganache:8545",
+  "chainId": 1337,
+  "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "transactionHash": "0x384f2c945e483a6ece082469282fb733ec872ba5e0d79f9110f1a90e7854f8df",
+  "blockNumber": 1,
+  "status": 1,
+  "gasUsed": 209016,
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "abiPath": "/deployments/abi.json",
+  "addressPath": "/deployments/address.json"
+}

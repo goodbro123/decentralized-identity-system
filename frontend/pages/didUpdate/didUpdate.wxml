@@ -1,0 +1,217 @@
+<!--pages/didUpdate/didUpdate.wxml-->
+<view class="page">
+
+  <!-- 顶部说明 -->
+  <view class="header-card">
+    <view class="header-top">
+      <view>
+        <view class="badge">DID UPDATE</view>
+        <view class="title">DID 文档更新</view>
+      </view>
+
+      <view class="status-pill {{backendOk ? 'online' : 'offline'}}">
+        {{backendOk ? '后端在线' : '后端离线'}}
+      </view>
+    </view>
+
+    <view class="subtitle">
+      修改 DID 文档属性并提交新版本。后端会重新计算摘要、默克尔根和版本哈希，并更新链上可信状态。
+    </view>
+  </view>
+
+  <!-- 当前版本摘要 -->
+  <view class="section-card" wx:if="{{loaded}}">
+    <view class="section-head">
+      <view>
+        <view class="section-title">当前版本信息</view>
+        <view class="section-desc">本次更新将基于当前版本生成新版本</view>
+      </view>
+
+      <view class="chain-badge">
+        Version {{oldChainState.version || oldCurrentDocument.version || '-'}}
+      </view>
+    </view>
+
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-label">当前版本</view>
+        <view class="status-value">
+          {{oldChainState.version || oldCurrentDocument.version || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">文档状态</view>
+        <view class="status-value success">
+          {{oldCurrentDocument.status || status || 'active'}}
+        </view>
+      </view>
+
+      <view class="status-item wide">
+        <view class="status-label">最近更新时间</view>
+        <view class="status-value small">
+          {{oldUpdatedAtText}}
+        </view>
+      </view>
+    </view>
+
+    <view class="hash-row" bindtap="copyDocumentHash">
+      <view class="hash-main">
+        <view class="hash-label">当前 document_hash</view>
+        <view class="hash-value">
+          {{oldChainState.document_hash || oldChainState.doc_hash || oldCurrentDocument.document_hash || oldCurrentDocument.doc_hash || '-'}}
+        </view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+  </view>
+
+  <!-- 编辑 DID 文档 -->
+  <view class="section-card" wx:if="{{loaded}}">
+    <view class="section-title">编辑 DID 文档</view>
+    <view class="section-desc">修改后提交，系统会生成新的链下文档版本和链上摘要。</view>
+
+    <view class="field">
+      <view class="label">姓名</view>
+      <input
+        class="input"
+        placeholder="请输入姓名"
+        placeholder-class="placeholder"
+        value="{{name}}"
+        data-field="name"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="field">
+      <view class="label">组织</view>
+      <input
+        class="input"
+        placeholder="例如：Nanjing Institute of Technology"
+        placeholder-class="placeholder"
+        value="{{organization}}"
+        data-field="organization"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="field">
+      <view class="label">邮箱</view>
+      <input
+        class="input"
+        placeholder="例如：alice@example.com"
+        placeholder-class="placeholder"
+        value="{{email}}"
+        data-field="email"
+        bindinput="onInput"
+      />
+    </view>
+
+    <view class="field">
+        <view class="label">角色</view>
+        <input
+          class="input"
+          placeholder="例如：student"
+          placeholder-class="placeholder"
+          value="{{role}}"
+          data-field="role"
+          bindinput="onInput"
+        />
+    </view>
+
+
+    <view class="button-row">
+      <button class="secondary-btn" bindtap="resetForm">
+        恢复原值
+      </button>
+
+      <button class="primary-btn" loading="{{submitting}}" bindtap="submitUpdate">
+        {{submitting ? '提交中' : '提交更新'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 未加载提示 -->
+  <view class="empty-card" wx:if="{{!loaded && !loading}}">
+    <t-icon name="info-circle" size="46rpx" color="#8E98A8" />
+    <view class="empty-title">请先加载当前文档</view>
+    <view class="empty-desc">
+      DID 更新必须基于已有文档版本进行。请先输入 DID 并加载当前文档。
+    </view>
+  </view>
+
+  <!-- 更新结果 -->
+  <view class="section-card" wx:if="{{updateResult}}">
+    <view class="section-head">
+      <view>
+        <view class="section-title">更新结果</view>
+        <view class="section-desc">后端返回的新版本与链上交易结果</view>
+      </view>
+
+      <view class="chain-badge success">
+        Updated
+      </view>
+    </view>
+
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-label">更新状态</view>
+        <view class="status-value success">
+          成功
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">更新时间</view>
+        <view class="status-value small">
+          {{updateTimeText}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">新版本</view>
+        <view class="status-value">
+          {{updateResult.version || updateResult.current_version || updateResult.latest_version || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">Gas Used</view>
+        <view class="status-value small">
+          {{updateChainResult.gas_used || updateChainResult.gasUsed || updateResult.gas_used || '-'}}
+        </view>
+      </view>
+    </view>
+
+    <view class="hash-row" bindtap="copyDocumentHash">
+      <view class="hash-main">
+        <view class="hash-label">new document_hash</view>
+        <view class="hash-value">
+          {{updateResult.document_hash || updateResult.doc_hash || updateResult.docHash || '-'}}
+        </view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+
+    <view class="hash-row" bindtap="copyTransactionHash">
+      <view class="hash-main">
+        <view class="hash-label">transaction_hash</view>
+        <view class="hash-value">
+          {{updateResult.transaction_hash || updateResult.tx_hash || updateResult.transactionHash || updateChainResult.transaction_hash || updateChainResult.tx_hash || '-'}}
+        </view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-card">
+    <view class="bottom-text">
+      <view class="bottom-title">更新说明</view>
+      <view class="bottom-desc">
+        DID 更新会产生新版本。更新完成后，建议前往状态查询页确认链上链下摘要是否一致。
+      </view>
+    </view>
+  </view>
+
+</view>

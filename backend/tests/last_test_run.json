@@ -1,0 +1,341 @@
+{
+  "base_url": "http://localhost:5000",
+  "did": "did:ethr:visible-test:1777840539",
+  "marker": "MONGO_VISIBLE_1777840539",
+  "collections_hint": [
+    "did_documents",
+    "did_versions",
+    "verification_records",
+    "did_recovery_blocks",
+    "experiment_records"
+  ],
+  "create_data": {
+    "chain_result": {
+      "block_number": 3,
+      "events": [
+        {
+          "did_key": "0x107efd141afc03e4d60d656c87c529333e1ed582db12f81c39237740862305de",
+          "document_hash": "0x4863c64085870b3a7012c30566c8e44c361e9fba2ede5334ae6ee69613abfc8f",
+          "merkle_root": "0x6fe89e93a0c6e4bdcdfdc026e6cf855022fff54793463e3718bc1641ac51a24a",
+          "updated_at": 1777840539,
+          "version": 1,
+          "version_hash": "0x42b5af6795c00fc998105424cb5ab2e22082aabb7b640e5278c7bf39b63010d9"
+        }
+      ],
+      "gas_used": 159039,
+      "status": 1,
+      "tx_hash": "0x24cf9e9c4393ea96f4f6ab75e07d57a81d28bf4a2b6ce427ad549e0eb9546986"
+    },
+    "did": "did:ethr:visible-test:1777840539",
+    "document_hash": "0x4863c64085870b3a7012c30566c8e44c361e9fba2ede5334ae6ee69613abfc8f",
+    "merkle_root": "0x6fe89e93a0c6e4bdcdfdc026e6cf855022fff54793463e3718bc1641ac51a24a",
+    "version": 1,
+    "version_hash": "0x42b5af6795c00fc998105424cb5ab2e22082aabb7b640e5278c7bf39b63010d9"
+  },
+  "update_data": {
+    "chain_result": {
+      "block_number": 4,
+      "events": [
+        {
+          "did_key": "0x107efd141afc03e4d60d656c87c529333e1ed582db12f81c39237740862305de",
+          "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+          "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+          "updated_at": 1777840539,
+          "version": 2,
+          "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+        }
+      ],
+      "gas_used": 50688,
+      "status": 1,
+      "tx_hash": "0xf80e1f7c4ab21e0a1c040cdee6e50cf00321c6e07de0463160014d5867022320"
+    },
+    "changed_attributes": [
+      {
+        "new_value": "student",
+        "old_value": null,
+        "path": "attributes.role"
+      },
+      {
+        "new_value": "updated",
+        "old_value": null,
+        "path": "attributes.status"
+      },
+      {
+        "new_value": "this is version 2 for Mongo verification",
+        "old_value": "open MongoDB and search this did or marker",
+        "path": "meta.note"
+      },
+      {
+        "new_value": "Mongo Visible Test User V2",
+        "old_value": "Mongo Visible Test User V1",
+        "path": "name"
+      },
+      {
+        "new_value": "visible-test-v2@example.com",
+        "old_value": "visible-test-v1@example.com",
+        "path": "profile.email"
+      },
+      {
+        "new_value": "Nanjing Institute of Technology",
+        "old_value": "NJIT",
+        "path": "profile.organization"
+      },
+      {
+        "new_value": "pk-visible-test-v2",
+        "old_value": "pk-visible-test-v1",
+        "path": "publicKey"
+      }
+    ],
+    "did": "did:ethr:visible-test:1777840539",
+    "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+    "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+    "version": 2,
+    "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+  },
+  "latest_data": {
+    "chain_state": {
+      "did_key": "0x107efd141afc03e4d60d656c87c529333e1ed582db12f81c39237740862305de",
+      "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+      "exists": true,
+      "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+      "updated_at": 1777840539,
+      "version": 2,
+      "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+    },
+    "current_document": {
+      "changed_attributes": [
+        {
+          "new_value": "student",
+          "old_value": null,
+          "path": "attributes.role"
+        },
+        {
+          "new_value": "updated",
+          "old_value": null,
+          "path": "attributes.status"
+        },
+        {
+          "new_value": "this is version 2 for Mongo verification",
+          "old_value": "open MongoDB and search this did or marker",
+          "path": "meta.note"
+        },
+        {
+          "new_value": "Mongo Visible Test User V2",
+          "old_value": "Mongo Visible Test User V1",
+          "path": "name"
+        },
+        {
+          "new_value": "visible-test-v2@example.com",
+          "old_value": "visible-test-v1@example.com",
+          "path": "profile.email"
+        },
+        {
+          "new_value": "Nanjing Institute of Technology",
+          "old_value": "NJIT",
+          "path": "profile.organization"
+        },
+        {
+          "new_value": "pk-visible-test-v2",
+          "old_value": "pk-visible-test-v1",
+          "path": "publicKey"
+        }
+      ],
+      "created_at": "Sun, 03 May 2026 20:35:39 GMT",
+      "did": "did:ethr:visible-test:1777840539",
+      "document": {
+        "attributes": {
+          "role": "student",
+          "status": "updated"
+        },
+        "id": "did:ethr:visible-test:1777840539",
+        "meta": {
+          "created_by": "tests/test_http_flow_visible.py",
+          "note": "this is version 2 for Mongo verification",
+          "test_case": "api_flow_and_mongo_visibility"
+        },
+        "name": "Mongo Visible Test User V2",
+        "profile": {
+          "email": "visible-test-v2@example.com",
+          "organization": "Nanjing Institute of Technology",
+          "test_marker": "MONGO_VISIBLE_1777840539"
+        },
+        "publicKey": "pk-visible-test-v2"
+      },
+      "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+      "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+      "previous_version_hash": "0x42b5af6795c00fc998105424cb5ab2e22082aabb7b640e5278c7bf39b63010d9",
+      "status": "active",
+      "transaction_hash": "0xf80e1f7c4ab21e0a1c040cdee6e50cf00321c6e07de0463160014d5867022320",
+      "updated_at": "Sun, 03 May 2026 20:35:39 GMT",
+      "version": 2,
+      "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+    },
+    "did": "did:ethr:visible-test:1777840539",
+    "latest_version_record": {
+      "changed_attributes": [
+        {
+          "new_value": "student",
+          "old_value": null,
+          "path": "attributes.role"
+        },
+        {
+          "new_value": "updated",
+          "old_value": null,
+          "path": "attributes.status"
+        },
+        {
+          "new_value": "this is version 2 for Mongo verification",
+          "old_value": "open MongoDB and search this did or marker",
+          "path": "meta.note"
+        },
+        {
+          "new_value": "Mongo Visible Test User V2",
+          "old_value": "Mongo Visible Test User V1",
+          "path": "name"
+        },
+        {
+          "new_value": "visible-test-v2@example.com",
+          "old_value": "visible-test-v1@example.com",
+          "path": "profile.email"
+        },
+        {
+          "new_value": "Nanjing Institute of Technology",
+          "old_value": "NJIT",
+          "path": "profile.organization"
+        },
+        {
+          "new_value": "pk-visible-test-v2",
+          "old_value": "pk-visible-test-v1",
+          "path": "publicKey"
+        }
+      ],
+      "created_at": "Sun, 03 May 2026 20:35:39 GMT",
+      "did": "did:ethr:visible-test:1777840539",
+      "document": {
+        "attributes": {
+          "role": "student",
+          "status": "updated"
+        },
+        "id": "did:ethr:visible-test:1777840539",
+        "meta": {
+          "created_by": "tests/test_http_flow_visible.py",
+          "note": "this is version 2 for Mongo verification",
+          "test_case": "api_flow_and_mongo_visibility"
+        },
+        "name": "Mongo Visible Test User V2",
+        "profile": {
+          "email": "visible-test-v2@example.com",
+          "organization": "Nanjing Institute of Technology",
+          "test_marker": "MONGO_VISIBLE_1777840539"
+        },
+        "publicKey": "pk-visible-test-v2"
+      },
+      "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+      "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+      "previous_version_hash": "0x42b5af6795c00fc998105424cb5ab2e22082aabb7b640e5278c7bf39b63010d9",
+      "status": "active",
+      "transaction_hash": "0xf80e1f7c4ab21e0a1c040cdee6e50cf00321c6e07de0463160014d5867022320",
+      "updated_at": "Sun, 03 May 2026 20:35:39 GMT",
+      "version": 2,
+      "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+    }
+  },
+  "verify_data": {
+    "chain_state": {
+      "did_key": "0x107efd141afc03e4d60d656c87c529333e1ed582db12f81c39237740862305de",
+      "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+      "exists": true,
+      "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+      "updated_at": 1777840539,
+      "version": 2,
+      "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+    },
+    "did": "did:ethr:visible-test:1777840539",
+    "history_chain_valid": true,
+    "history_errors": [],
+    "is_valid": true,
+    "latest_chain_match": true,
+    "recomputed_target": {
+      "document_hash": "0x34251b949edb242d0c7f7fe5b98c0379d4a246e7d71b60e3865f880779f2dece",
+      "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+      "version_hash": "0xf72785ff1461423cd60a597e3a4d64107145691b0f8abf637e8a3d7e18c50de3"
+    },
+    "requested_version": 2,
+    "target_document_hash_match": true,
+    "target_merkle_root_match": true,
+    "target_version_hash_match": true,
+    "transaction_status": {
+      "block_number": 4,
+      "gas_used": 50688,
+      "status": 1,
+      "tx_hash": "0xf80e1f7c4ab21e0a1c040cdee6e50cf00321c6e07de0463160014d5867022320"
+    },
+    "transaction_verified": true
+  },
+  "proof_data": {
+    "attribute_path": "profile.organization",
+    "did": "did:ethr:visible-test:1777840539",
+    "proof": {
+      "attribute_path": "profile.organization",
+      "attribute_value": "Nanjing Institute of Technology",
+      "leaf_hash": "0x2ef46db22ee7a72c8d113499e011e2524bdca80be6a02c57af96237b6e6dc1d2",
+      "merkle_root": "0xbe90570336684e11331f8c63bde5571ba8c20490c8ab8345bd245627b852ece4",
+      "proof": [
+        {
+          "hash": "0x6660321c5507e17d9b79ee301738c9b99f0ab29b520378d58756ee82fdd6d9cc",
+          "position": "right"
+        },
+        {
+          "hash": "0x35777b7a56c17caf5092ce7ed27f2635e62a7ebb0517d7813fd7794a61002760",
+          "position": "right"
+        },
+        {
+          "hash": "0xb7a2bb181cd51b09bac926adfcb3f6367a6f2d538899cfc683c82263bb7acf55",
+          "position": "right"
+        },
+        {
+          "hash": "0xbfcc9207cba3770c66cdc25bf46ab7a5c6a963f5b0c060505411e79a0bb68cc9",
+          "position": "left"
+        }
+      ]
+    },
+    "version": 2
+  },
+  "recover_data": null,
+  "documents": {
+    "v1": {
+      "id": "did:ethr:visible-test:1777840539",
+      "name": "Mongo Visible Test User V1",
+      "publicKey": "pk-visible-test-v1",
+      "profile": {
+        "organization": "NJIT",
+        "email": "visible-test-v1@example.com",
+        "test_marker": "MONGO_VISIBLE_1777840539"
+      },
+      "meta": {
+        "created_by": "tests/test_http_flow_visible.py",
+        "test_case": "api_flow_and_mongo_visibility",
+        "note": "open MongoDB and search this did or marker"
+      }
+    },
+    "v2": {
+      "id": "did:ethr:visible-test:1777840539",
+      "name": "Mongo Visible Test User V2",
+      "publicKey": "pk-visible-test-v2",
+      "profile": {
+        "organization": "Nanjing Institute of Technology",
+        "email": "visible-test-v2@example.com",
+        "test_marker": "MONGO_VISIBLE_1777840539"
+      },
+      "attributes": {
+        "role": "student",
+        "status": "updated"
+      },
+      "meta": {
+        "created_by": "tests/test_http_flow_visible.py",
+        "test_case": "api_flow_and_mongo_visibility",
+        "note": "this is version 2 for Mongo verification"
+      }
+    }
+  }
+}

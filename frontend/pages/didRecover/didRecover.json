@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "数据恢复",
+  "navigationBarBackgroundColor": "#0F1115",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#0F1115",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "t-icon": "tdesign-miniprogram/icon/icon"
+  }
+}

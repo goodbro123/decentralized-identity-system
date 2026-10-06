@@ -1,0 +1,237 @@
+<view class="page">
+
+<!-- 顶部说明 -->
+<view class="hero-card">
+  <view class="hero-top">
+    <view>
+      <view class="hero-title">DID 属性证明</view>
+      <view class="hero-desc">
+        根据指定属性路径生成 Merkle 包含证明，用于验证 DID 文档中的某个字段是否属于当前版本。
+      </view>
+    </view>
+
+    <view class="backend-status {{backendOk ? 'ok' : 'bad'}}">
+      {{backendOk ? '后端在线' : '后端离线'}}
+    </view>
+  </view>
+
+  <view class="hero-tips">
+    <view class="tip-item">
+      <text class="tip-dot"></text>
+      <text>证明对象：DID 文档中的某一个属性路径</text>
+    </view>
+    <view class="tip-item">
+      <text class="tip-dot"></text>
+      <text>证明结果：叶子哈希、Merkle 根和兄弟节点路径</text>
+    </view>
+    <view class="tip-item">
+      <text class="tip-dot"></text>
+      <text>适用场景：选择性披露、字段级完整性验证</text>
+    </view>
+  </view>
+</view>
+
+<!-- 表单 -->
+<view class="section-card">
+  <view class="section-head">
+    <view>
+      <view class="section-title">生成属性证明</view>
+      <view class="section-desc">填写 DID、版本号和属性路径</view>
+    </view>
+    <view class="link-btn" bindtap="useCurrentDid">使用当前 DID</view>
+  </view>
+
+  <view class="form-group">
+    <view class="form-label">DID 标识</view>
+    <textarea
+      class="textarea did-input"
+      auto-height
+      maxlength="-1"
+      placeholder="请输入 did:ethr:0x..."
+      value="{{did}}"
+      bindinput="onDidInput"
+    />
+  </view>
+
+  <view class="form-group">
+    <view class="form-label">版本号（可选）</view>
+    <input
+      class="input"
+      type="number"
+      placeholder="不填则使用当前版本"
+      value="{{version}}"
+      bindinput="onVersionInput"
+    />
+  </view>
+
+  <view class="form-group">
+    <view class="form-label">属性路径</view>
+    <input
+      class="input"
+      placeholder="例如：id、controller..."
+      value="{{attributePath}}"
+      bindinput="onAttributePathInput"
+    />
+    <view class="form-hint">
+      属性路径需与后端 flatten_document 生成的路径一致，数组使用 [0] 形式。
+    </view>
+  </view>
+
+  <view class="quick-title">常用属性路径</view>
+  <view class="quick-list">
+    <view
+      wx:for="{{commonAttributes}}"
+      wx:key="value"
+      class="quick-chip {{attributePath === item.value ? 'active' : ''}}"
+      data-value="{{item.value}}"
+      bindtap="chooseCommonAttribute"
+    >
+      {{item.label}}
+    </view>
+  </view>
+
+  <view class="action-row">
+    <button class="primary-btn" loading="{{loading}}" bindtap="queryProof">
+      {{loading ? '生成中...' : '生成证明'}}
+    </button>
+    <button class="ghost-btn" bindtap="resetForm">重置</button>
+  </view>
+</view>
+
+<!-- 空状态 -->
+<view class="empty-card" wx:if="{{queried && !result && !loading}}">
+  <view class="empty-title">暂无证明结果</view>
+  <view class="empty-desc">
+    请检查 DID 是否存在、版本号是否正确，以及属性路径是否属于 DID 文档。
+  </view>
+</view>
+
+<!-- 证明摘要 -->
+<view class="section-card" wx:if="{{normalized}}">
+  <view class="section-head">
+    <view>
+      <view class="section-title">证明摘要</view>
+      <view class="section-desc">字段级 Merkle 包含证明的核心信息</view>
+    </view>
+    <view class="copy-btn" bindtap="copyResultJson">复制 JSON</view>
+  </view>
+
+  <view class="summary-grid">
+    <view class="summary-item">
+      <view class="summary-label">DID</view>
+      <view class="summary-value mono" data-value="{{normalized.did}}" bindtap="copyText">
+        {{normalized.did || '-'}}
+      </view>
+    </view>
+
+    <view class="summary-item">
+      <view class="summary-label">版本号</view>
+      <view class="summary-value">
+        {{normalized.version || '-'}}
+      </view>
+    </view>
+
+    <view class="summary-item">
+      <view class="summary-label">属性路径</view>
+      <view class="summary-value mono" data-value="{{normalized.attributePath}}" bindtap="copyText">
+        {{normalized.attributePath || '-'}}
+      </view>
+    </view>
+
+    <view class="summary-item">
+      <view class="summary-label">属性值</view>
+      <view class="summary-value mono">
+        {{normalized.attributeValue === undefined ? '-' : normalized.attributeValue}}
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 哈希信息 -->
+<view class="section-card" wx:if="{{normalized}}">
+  <view class="section-head">
+    <view>
+      <view class="section-title">哈希信息</view>
+      <view class="section-desc">叶子哈希与 Merkle 根</view>
+    </view>
+  </view>
+
+  <view class="hash-row" data-value="{{normalized.leafHash}}" bindtap="copyText">
+    <view class="hash-main">
+      <view class="hash-label">Leaf Hash</view>
+      <view class="hash-value">{{normalized.leafHash || '-'}}</view>
+    </view>
+    <t-icon name="copy" size="32rpx" color="#7E8795" />
+  </view>
+
+  <view class="hash-row" data-value="{{normalized.merkleRoot}}" bindtap="copyText">
+    <view class="hash-main">
+      <view class="hash-label">Merkle Root</view>
+      <view class="hash-value">{{normalized.merkleRoot || '-'}}</view>
+    </view>
+    <t-icon name="copy" size="32rpx" color="#7E8795" />
+  </view>
+</view>
+
+<!-- 证明路径 -->
+<view class="section-card" wx:if="{{normalized}}">
+  <view class="section-head">
+    <view>
+      <view class="section-title">证明路径</view>
+      <view class="section-desc">从叶子节点到根节点所需的兄弟哈希</view>
+    </view>
+    <view class="badge">{{proofItems.length}} 步</view>
+  </view>
+
+  <view wx:if="{{proofItems.length > 0}}" class="proof-list">
+    <view
+      wx:for="{{proofItems}}"
+      wx:key="index"
+      class="proof-item"
+    >
+      <view class="proof-index">#{{item.step}}</view>
+
+      <view class="proof-content">
+        <view class="proof-top">
+          <view class="proof-position {{item.position}}">
+            {{item.position || '-'}}
+          </view>
+          <view class="proof-short">{{item.shortHash}}</view>
+        </view>
+
+        <view class="proof-hash mono" data-value="{{item.hash}}" bindtap="copyText">
+          {{item.hash}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-proof">
+    当前属性可能是唯一叶子节点，因此证明路径为空。
+  </view>
+</view>
+
+<!-- 原始 JSON -->
+<view class="section-card" wx:if="{{resultJson}}">
+  <view class="section-head">
+    <view>
+      <view class="section-title">原始证明 JSON</view>
+      <view class="section-desc">后端返回的完整证明结果</view>
+    </view>
+    <view class="copy-btn" bindtap="copyResultJson">复制</view>
+  </view>
+
+  <view class="json-box">
+    <text>{{resultJson}}</text>
+  </view>
+</view>
+
+<!-- 底部操作 -->
+<view class="bottom-card">
+  <view class="bottom-title">后续操作</view>
+  <view class="bottom-desc">
+    生成属性证明后，可以继续查看 DID 最新状态，或执行完整身份认证。
+  </view>
+</view>
+
+</view>

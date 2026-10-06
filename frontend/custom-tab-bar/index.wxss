@@ -1,0 +1,59 @@
+/* TDesign TabBar 整体 */
+.custom-tab-bar {
+  --td-tab-bar-bg-color: #12151B;
+  --td-tab-bar-color: #7E8795;
+  --td-tab-bar-active-color: #4C8DFF;
+  --td-tab-bar-border-color: #2A2F3A;
+
+  /* 如果 theme="tag" 产生白色胶囊，尝试覆盖 tag 背景 */
+  --td-tab-bar-tag-active-bg-color: rgba(76, 141, 255, 0.14);
+  --td-tab-bar-tag-active-color: #4C8DFF;
+
+  background: #12151B;
+  border-top: 1rpx solid #2A2F3A;
+  box-shadow: 0 -12rpx 36rpx rgba(0, 0, 0, 0.32);
+}
+
+/* 兜底：让 TDesign 内部背景也偏黑 */
+.custom-tab-bar .t-tab-bar {
+  background: #12151B !important;
+}
+
+/* 普通项 */
+.custom-tab-bar .t-tab-bar-item {
+  color: #7E8795 !important;
+}
+
+/* 选中项 */
+.custom-tab-bar .t-tab-bar-item--active {
+  color: #4C8DFF !important;
+}
+
+/* 重点：覆盖可能出现的白色选中胶囊 */
+.custom-tab-bar .t-tab-bar-item--active,
+.custom-tab-bar .t-tab-bar__item--active,
+.custom-tab-bar .t-tab-bar-item__content--active,
+.custom-tab-bar .t-tab-bar__item-content--active {
+  background: rgba(76, 141, 255, 0.14) !important;
+  color: #4C8DFF !important;
+  border-radius: 24rpx !important;
+}
+
+/* 如果白色块在内容容器上 */
+.custom-tab-bar .t-tab-bar-item__content,
+.custom-tab-bar .t-tab-bar__item-content {
+  background: transparent !important;
+}
+
+/* 如果选中后内容容器变白 */
+.custom-tab-bar .t-tab-bar-item--active .t-tab-bar-item__content,
+.custom-tab-bar .t-tab-bar__item--active .t-tab-bar__item-content {
+  background: rgba(76, 141, 255, 0.14) !important;
+  color: #4C8DFF !important;
+  border-radius: 24rpx !important;
+}
+
+/* 图标颜色跟随 */
+.custom-tab-bar .t-icon {
+  color: inherit !important;
+}

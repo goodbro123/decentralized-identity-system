@@ -1,0 +1,198 @@
+<!--pages/my/my.wxml-->
+<view class="page">
+
+  <!-- 顶部身份卡 -->
+  <view class="profile-card">
+    <view class="profile-top">
+      <view class="avatar">
+        <t-icon name="user" size="48rpx" color="#4C8DFF" />
+      </view>
+
+      <view class="profile-main">
+        <view class="profile-title">我的 DID 身份</view>
+        <view class="profile-desc">管理当前绑定的去中心化身份</view>
+      </view>
+
+      <view class="status-pill {{backendOk ? 'online' : 'offline'}}">
+        {{backendOk ? '后端在线' : '后端离线'}}
+      </view>
+    </view>
+
+    <view class="did-box">
+      <view class="did-head">
+        <view>
+          <view class="did-label">当前绑定 DID</view>
+          <view class="did-value">{{currentDid || '-'}}</view>
+        </view>
+
+        <view class="copy-btn" bindtap="copyDid">
+          复制
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 身份状态 -->
+  <view class="section-card">
+    <view class="section-head">
+      <view>
+        <view class="section-title">身份状态</view>
+        <view class="section-desc">当前 DID 的链上链下状态摘要</view>
+      </view>
+
+      <view class="refresh-btn" bindtap="refreshCurrentDid">
+        {{loading ? '刷新中' : '刷新'}}
+      </view>
+    </view>
+
+    <view class="status-grid">
+      <view class="status-item">
+        <view class="status-label">链上版本</view>
+        <view class="status-value">
+          {{chainState.version || currentDocument.version || '-'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">身份状态</view>
+        <view class="status-value {{documentMissing ? 'danger' : 'success'}}">
+          {{documentMissing ? 'error' : (currentDocument.status || 'active')}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">后端服务</view>
+        <view class="status-value {{backendOk ? 'success' : 'danger'}}">
+          {{backendOk ? '正常' : '异常'}}
+        </view>
+      </view>
+
+      <view class="status-item">
+        <view class="status-label">绑定状态</view>
+        <view class="status-value success">
+          {{currentDid ? '已绑定' : '未绑定'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 可信摘要 -->
+  <view class="section-card">
+    <view class="section-title">可信摘要</view>
+    <view class="section-desc">用于链上链下一致性校验的关键字段</view>
+
+    <view class="hash-row" bindtap="copyDocumentHash">
+      <view class="hash-main">
+        <view class="hash-label">document_hash</view>
+        <view class="hash-value">
+          {{chainState.document_hash || chainState.doc_hash || currentDocument.document_hash || currentDocument.doc_hash || '-'}}
+        </view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+
+    <view class="hash-row" bindtap="copyMerkleRoot">
+      <view class="hash-main">
+        <view class="hash-label">merkle_root</view>
+        <view class="hash-value">
+          {{chainState.merkle_root || currentDocument.merkle_root || '-'}}
+        </view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+
+    <view class="hash-row" bindtap="copyVersionHash">
+      <view class="hash-main">
+        <view class="hash-label">version_hash</view>
+        <view class="hash-value">
+          {{chainState.version_hash || currentDocument.version_hash || '-'}}
+        </view>
+      </view>
+      <t-icon name="copy" size="32rpx" color="#5F6775" />
+    </view>
+  </view>
+
+  <!-- 系统环境 -->
+  <view class="section-card">
+    <view class="section-title">系统环境</view>
+    <view class="section-desc">当前小程序连接与身份模式</view>
+
+    <view class="info-list">
+      <view class="info-item">
+        <view class="info-label">后端地址</view>
+        <view class="info-value">{{baseURL}}</view>
+      </view>
+
+      <view class="info-item">
+        <view class="info-label">身份模式</view>
+        <view class="info-value">{{identityMode}}</view>
+      </view>
+
+      <view class="info-item">
+        <view class="info-label">认证方式</view>
+        <view class="info-value">{{authMode}}</view>
+      </view>
+
+      <view class="info-item">
+        <view class="info-label">运行模式</view>
+        <view class="info-value">{{appMode}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 身份管理 -->
+  <view class="section-card">
+    <view class="section-title">身份管理</view>
+    <view class="section-desc">管理当前本地绑定的 DID 身份</view>
+
+    <view class="action-list">
+      <view class="action-item" bindtap="refreshCurrentDid">
+        <view class="action-left">
+          <view class="action-icon blue">
+            <t-icon name="refresh" size="34rpx" color="currentColor" />
+          </view>
+          <view>
+            <view class="action-title">刷新当前身份</view>
+            <view class="action-desc">重新查询 DID 链上链下状态</view>
+          </view>
+        </view>
+        <t-icon name="chevron-right" size="32rpx" color="#5F6775" />
+      </view>
+
+      <view class="action-item" bindtap="goLogin">
+        <view class="action-left">
+          <view class="action-icon orange">
+            <t-icon name="swap" size="34rpx" color="currentColor" />
+          </view>
+          <view>
+            <view class="action-title">切换 DID</view>
+            <view class="action-desc">清除当前 DID 后重新绑定</view>
+          </view>
+        </view>
+        <t-icon name="chevron-right" size="32rpx" color="#5F6775" />
+      </view>
+
+      <view class="action-item danger-item" bindtap="unbindDid">
+        <view class="action-left">
+          <view class="action-icon red">
+            <t-icon name="logout" size="34rpx" color="currentColor" />
+          </view>
+          <view>
+            <view class="action-title danger-text">解除 DID 绑定</view>
+            <view class="action-desc">删除本地 currentDid 与 currentDidInfo</view>
+          </view>
+        </view>
+        <t-icon name="chevron-right" size="32rpx" color="#5F6775" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 系统说明 -->
+  <view class="notice-card">
+    <view class="notice-title">关于当前身份模式</view>
+    <view class="notice-desc">
+      本小程序不使用传统账号密码作为核心身份。前端仅保存 currentDid 作为当前身份指针，身份可信性由链上状态、链下 DID 文档摘要、默克尔根和版本哈希链共同验证。
+    </view>
+  </view>
+
+</view>

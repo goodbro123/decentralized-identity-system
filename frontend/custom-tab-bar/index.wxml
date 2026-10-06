@@ -1,0 +1,16 @@
+<view class="custom-tab-bar">
+  <t-tab-bar
+    value="{{value}}"
+    split="{{false}}"
+    bindchange="onChange"
+  >
+    <t-tab-bar-item
+      wx:for="{{tabBarList}}"
+      wx:key="value"
+      value="{{item.value}}"
+      icon="{{item.icon}}"
+    >
+      {{item.label}}
+    </t-tab-bar-item>
+  </t-tab-bar>
+</view>

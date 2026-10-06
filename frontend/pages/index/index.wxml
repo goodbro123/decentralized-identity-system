@@ -1,0 +1,96 @@
+<view class="page">
+
+  <!-- 顶部系统卡片 -->
+  <view class="header-card">
+    <view class="header-top">
+      <view class="header-main">
+        <view class="badge">DID SYSTEM</view>
+        <view class="title">去中心化身份认证系统</view>
+      </view>
+
+      <view class="status-pill {{backendOk ? 'online' : 'offline'}}">
+        {{backendOk ? '后端在线' : '后端离线'}}
+      </view>
+    </view>
+
+    <view class="subtitle">
+      当前小程序以 DID 作为核心身份。链上保存可信摘要，链下保存 DID 文档与历史版本。
+    </view>
+  </view>
+
+  <!-- 当前 DID 身份 -->
+  <view class="identity-card">
+    <view class="section-head">
+      <view>
+        <view class="section-title">当前 DID 身份</view>
+        <view class="section-desc">Current Decentralized Identifier</view>
+      </view>
+
+      <view class="refresh-btn" bindtap="refreshCurrentDid">
+        {{loading ? '刷新中' : '刷新'}}
+      </view>
+    </view>
+
+    <view class="did-box">
+      <view class="did-header">
+       <view class="did-label">DID</view>
+       <button class="copy-btn" bindtap="copyCurrentDid">复制</button>
+      </view>
+      <view class="did-value">{{currentDid || '-'}}</view>
+    </view>
+
+    <view class="meta-grid">
+      <view class="meta-item">
+        <view class="meta-label">链上版本</view>
+        <view class="meta-value">
+          {{chainState.version || currentDocument.version || '-'}}
+        </view>
+      </view>
+
+      <view class="meta-item">
+        <view class="meta-label">身份状态</view>
+        <view class="meta-value success">
+          {{currentDocument.status || 'active'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 链上链下摘要 -->
+  <view class="summary-card">
+    <view class="section-title">链上链下摘要</view>
+    <view class="section-desc">用于判断链下文档是否与链上可信状态一致</view>
+
+    <view class="hash-row">
+      <view class="hash-label">document_hash</view>
+      <view class="hash-value">
+        {{chainState.document_hash || chainState.doc_hash || currentDocument.document_hash || currentDocument.doc_hash || '-'}}
+      </view>
+    </view>
+
+    <view class="hash-row">
+      <view class="hash-label">merkle_root</view>
+      <view class="hash-value">
+        {{chainState.merkle_root || currentDocument.merkle_root || '-'}}
+      </view>
+    </view>
+
+    <view class="hash-row">
+      <view class="hash-label">version_hash</view>
+      <view class="hash-value">
+        {{chainState.version_hash || currentDocument.version_hash || '-'}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 首页说明 -->
+  <view class="bottom-card">
+    <view class="bottom-text">
+      <view class="bottom-title">当前身份已绑定</view>
+      <view class="bottom-desc">
+        主要业务操作请前往“操作”页面完成，包括状态查询、DID 更新、身份认证、数据恢复和属性证明。
+      </view>
+    </view>
+  </view>
+
+</view>

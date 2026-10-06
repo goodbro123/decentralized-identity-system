@@ -1,0 +1,348 @@
+@import "../../variable.less";
+
+page {
+  min-height: 100vh;
+  background: @bg-page;
+  color: @text-primary;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 40rpx 28rpx 180rpx;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(76, 141, 255, 0.16), transparent 30%),
+    radial-gradient(circle at 90% 12%, rgba(56, 189, 248, 0.10), transparent 28%),
+    @bg-page;
+}
+
+.profile-card,
+.section-card,
+.notice-card {
+  background: rgba(23, 26, 33, 0.96);
+  border: 1rpx solid @border-color;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  box-sizing: border-box;
+  margin-bottom: 24rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.26);
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 28rpx;
+  background: @primary-color-light;
+  border: 1rpx solid rgba(76, 141, 255, 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-title {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: @text-primary;
+}
+
+.profile-desc {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: @text-secondary;
+}
+
+.status-pill {
+  flex-shrink: 0;
+  padding: 10rpx 18rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.status-pill.online {
+  color: @success-color;
+  background: @success-bg;
+  border: 1rpx solid rgba(34, 197, 94, 0.28);
+}
+
+.status-pill.offline {
+  color: @error-color;
+  background: @error-bg;
+  border: 1rpx solid rgba(239, 68, 68, 0.28);
+}
+
+.did-box {
+  margin-top: 28rpx;
+  padding: 22rpx;
+  border-radius: 20rpx;
+  background: @bg-card-secondary;
+  border: 1rpx solid @border-color;
+}
+
+.did-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.did-label {
+  font-size: 22rpx;
+  color: @text-secondary;
+  margin-bottom: 10rpx;
+}
+
+.did-value {
+  font-size: 26rpx;
+  color: @text-primary;
+  line-height: 1.5;
+  word-break: break-all;
+  font-weight: 700;
+}
+
+.copy-btn,
+.refresh-btn {
+  flex-shrink: 0;
+  padding: 10rpx 20rpx;
+  border-radius: 999rpx;
+  background: @primary-color-light;
+  color: @primary-color;
+  border: 1rpx solid rgba(76, 141, 255, 0.30);
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: @text-primary;
+}
+
+.section-desc {
+  margin-top: 8rpx;
+  font-size: 23rpx;
+  line-height: 1.5;
+  color: @text-secondary;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18rpx;
+  margin-top: 24rpx;
+}
+
+.status-item {
+  padding: 22rpx;
+  border-radius: 18rpx;
+  background: #10131A;
+  border: 1rpx solid @border-color;
+}
+
+.status-label {
+  font-size: 22rpx;
+  color: @text-secondary;
+}
+
+.status-value {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  line-height: 1.4;
+  color: @text-primary;
+  font-weight: 800;
+  word-break: break-all;
+}
+
+.status-value.success {
+  color: @success-color;
+}
+
+.status-value.danger {
+  color: @error-color;
+}
+
+.hash-row {
+  margin-top: 18rpx;
+  padding: 20rpx;
+  border-radius: 18rpx;
+  background: @bg-card-secondary;
+  border: 1rpx solid @border-color;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.hash-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.hash-label {
+  font-size: 22rpx;
+  color: @text-secondary;
+  margin-bottom: 10rpx;
+}
+
+.hash-value {
+  font-size: 23rpx;
+  line-height: 1.45;
+  color: @text-regular;
+  word-break: break-all;
+}
+
+.info-list {
+  margin-top: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.info-item {
+  padding: 20rpx;
+  border-radius: 18rpx;
+  background: @bg-card-secondary;
+  border: 1rpx solid @border-color;
+}
+
+.info-label {
+  font-size: 22rpx;
+  color: @text-secondary;
+  margin-bottom: 8rpx;
+}
+
+.info-value {
+  font-size: 24rpx;
+  line-height: 1.5;
+  color: @text-primary;
+  word-break: break-all;
+}
+
+.action-list {
+  margin-top: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 22rpx;
+  background: @bg-card-secondary;
+  border: 1rpx solid @border-color;
+  box-sizing: border-box;
+}
+
+.action-item:active {
+  transform: scale(0.985);
+  opacity: 0.92;
+}
+
+.action-left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.action-icon {
+  flex-shrink: 0;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon.blue {
+  color: @primary-color;
+  background: @primary-color-light;
+}
+
+.action-icon.cyan {
+  color: @info-color;
+  background: @info-bg;
+}
+
+.action-icon.orange {
+  color: @warning-color;
+  background: @warning-bg;
+}
+
+.action-icon.red {
+  color: @error-color;
+  background: @error-bg;
+}
+
+.action-title {
+  font-size: 27rpx;
+  color: @text-primary;
+  font-weight: 800;
+}
+
+.action-title.danger-text {
+  color: @error-color;
+}
+
+.action-desc {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  line-height: 1.5;
+  color: @text-secondary;
+}
+
+.danger-item {
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+.notice-card {
+  margin-bottom: 0;
+  background: rgba(76, 141, 255, 0.08);
+  border-color: rgba(76, 141, 255, 0.22);
+}
+
+.notice-title {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: @primary-color;
+}
+
+.notice-desc {
+  margin-top: 12rpx;
+  font-size: 23rpx;
+  line-height: 1.7;
+  color: @text-secondary;
+}
+
+.status-value.success {
+  color: @success-color;
+}
+
+.status-value.danger {
+  color: @error-color;
+}

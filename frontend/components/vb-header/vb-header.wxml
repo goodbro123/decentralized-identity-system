@@ -1,0 +1,8 @@
+<!--components/vb-header/vb-header.wxml-->
+<view class="top-box">
+  <image style="height: 100rpx; width:500rpx;" mode="aspectFit"  src="../../image/1.png"></image>
+  <view></view>
+  <t-sticky >
+    <t-search placeholder="搜索" shape="round" />
+  </t-sticky>
+</view>

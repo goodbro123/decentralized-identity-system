@@ -1,0 +1,71 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/release/release",
+    "pages/my/my",
+    "pages/login/login",
+    "pages/didLatest/didLatest",
+    "pages/didUpdate/didUpdate",
+    "pages/didVerify/didVerify",
+    "pages/didRecover/didRecover",
+    "pages/didProof/didProof"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#7E8795",
+    "selectedColor": "#4C8DFF",
+    "backgroundColor": "#12151B",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/release/release",
+        "text": "操作"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "navigationBarTitleText": "DID 身份认证系统",
+    "navigationBarBackgroundColor": "#0F1115",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0F1115",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "navigationStyle": "default"
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {
+    "t-tab-bar": "tdesign-miniprogram/tab-bar/tab-bar",
+    "t-tab-bar-item": "tdesign-miniprogram/tab-bar-item/tab-bar-item",
+    "t-grid": "tdesign-miniprogram/grid/grid",
+    "t-grid-item": "tdesign-miniprogram/grid-item/grid-item",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-sticky": "tdesign-miniprogram/sticky/sticky",
+    "t-search": "tdesign-miniprogram/search/search",
+    "t-swiper": "tdesign-miniprogram/swiper/swiper",
+    "t-skeleton": "tdesign-miniprogram/skeleton/skeleton",
+    "t-back-top": "tdesign-miniprogram/back-top/back-top",
+    "t-overlay": "tdesign-miniprogram/overlay/overlay",
+    "vb-header": "components/vb-header/vb-header",
+    "pub-title": "components/pub-title/pub-title",
+    "vb-act-item": "components/vb-header/vb-header",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-picker": "tdesign-miniprogram/picker/picker",
+    "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-date-time-picker": "tdesign-miniprogram/date-time-picker/date-time-picker",
+    "t-dialog": "tdesign-miniprogram/dialog/dialog"
+  }
+}

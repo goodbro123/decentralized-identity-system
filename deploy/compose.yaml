@@ -1,0 +1,83 @@
+services:
+  ganache:
+    image: trufflesuite/ganache:latest
+    container_name: did_ganache
+    command: >
+      --host 0.0.0.0
+      --port 8545
+      --chain.chainId 1337
+      --wallet.totalAccounts 10
+      --wallet.defaultBalance 100000
+      --wallet.mnemonic "test test test test test test test test test test test junk"
+      --miner.blockTime 0
+      --miner.blockGasLimit 100000000
+      --database.dbPath /data
+    ports:
+      - "8545:8545"
+    volumes:
+      - ganache_data:/data
+    networks:
+      - did_net
+
+  mongo:
+    image: mongo:7
+    container_name: did_mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - did_net
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: did_backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ../.env
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - mongo
+      - ganache
+    volumes:
+      - ../backend:/app
+      - ../contracts:/contracts
+      - ../deployments:/deployments
+    networks:
+      - did_net
+    dns:
+      - 8.8.8.8
+      - 114.114.114.114
+    command: flask run --host=0.0.0.0 --port=5000
+
+  streamlit:
+    build:
+      context: ../streamlit_app
+      dockerfile: Dockerfile
+    container_name: did_streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      - STREAMLIT_BACKEND_BASE_URL=http://backend:5000
+      - STREAMLIT_MONGO_URI=mongodb://mongo:27017
+      - STREAMLIT_MONGO_DB_NAME=did_system
+    depends_on:
+      - backend
+      - mongo
+    volumes:
+      - ../streamlit_app:/app
+    networks:
+      - did_net
+    command: streamlit run 首页.py --server.port=8501 --server.address=0.0.0.0
+
+volumes:
+  mongo_data:
+  ganache_data:
+
+networks:
+  did_net:
+    driver: bridge
